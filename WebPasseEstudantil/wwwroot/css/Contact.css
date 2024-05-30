@@ -158,7 +158,7 @@ ul {
     border: 0;
     border-radius: 20px;
     padding: 12px 30px;
-    margin-top: 30px;
+    margin-top: 15px;
     cursor: pointer;
     color: #FFF;
     background-color: #6c63ff;
@@ -171,7 +171,7 @@ ul {
 .custom-button {
     display: inline-block;
     padding: 12px 30px;
-    margin-top: 30px;
+    margin-top: 15px;
     cursor: pointer;
     color: #FFF;
     background-color: #6c63ff;
@@ -186,3 +186,24 @@ ul {
         text-decoration: none;
     }
 
+
+
+.btn-primary {
+    margin-top: 20px; /* Adjust margin as needed */
+    background-color: #084cdf;
+    border-color: #084cdf;
+    color: #fff;
+    padding: 10px 60px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
+    display: block; /* Make the button a block element */
+    margin: 0 auto; /* Center horizontally */
+}
+
+    .btn-primary:hover {
+        background-color: #0d45a5;
+        border-color: #0d45a5;
+    }

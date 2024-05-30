@@ -48,6 +48,36 @@
         <img src="https://i.postimg.cc/NfN5T1BT/marca-de-verificacao.png" class="check-icon" id="documento_ra_check">
     </label>
     <br />
+
+    <div class="dados-cartao">
+        <h1 class="titulo-pagina">Dados do <b style="color: #6c63ff;">Cartão</b></h1>
+        <div class="form-group">
+            <label for="nomeCartao">Nome no Cartão</label>
+            <input type="text" class="form-control" id="nomeCartao" placeholder="Digite o nome no cartão" required>
+        </div>
+
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="numeroCartao">Número do Cartão</label>
+                    <input type="text" class="form-control" id="numeroCartao" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="dataValidade">Data de Validade</label>
+                    <input type="text" class="form-control" id="dataValidade" placeholder="MM/YY" maxlength="5" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" class="form-control" id="cvv" placeholder="123" maxlength="3" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="valor-recarga">
         <label for="valorRecarga">Valor a ser recarregado (Máximo: <b>R$50,00</b>):</label>
         <div class="input-group">
@@ -55,13 +85,50 @@
             <input type="number" id="valorRecarga" name="valorRecarga" min="0" max="50" step="1" required>
         </div>
     </div>
-    <button type="submit" class="btn-primary">ENVIAR</button>
+    <br />
 
+    <button type="submit" class="btn-primary">ENVIAR</button>
     <script>
         function showCheckIcon(inputId) {
             var checkIcon = document.getElementById(inputId + "_check");
             checkIcon.style.display = "inline"; // Exibe o ícone de verificação
         }
+
+        document.getElementById("numeroCartao").addEventListener("input", function (event) {
+            var inputValue = event.target.value.replace(/\s/g, ''); // Remove espaços em branco
+            var formattedValue = '';
+            for (var i = 0; i < inputValue.length; i++) {
+                if (i > 0 && i % 4 === 0) { // Adiciona um espaço a cada 4 caracteres
+                    formattedValue += ' ';
+                }
+                formattedValue += inputValue[i];
+            }
+            event.target.value = formattedValue;
+
+            if (inputValue.length !== 16) { // Verifica se o número do cartão tem 16 dígitos
+                event.target.classList.add("error-border"); // Adiciona classe para borda vermelha
+            } else {
+                event.target.classList.remove("error-border"); // Remove a classe de borda vermelha
+            }
+        });
+
+        document.getElementById("numeroCartao").addEventListener("focus", function (event) {
+            event.target.classList.add("error-border");
+        });
+
+        document.getElementById("numeroCartao").addEventListener("blur", function (event) {
+            var inputValue = event.target.value.replace(/\s/g, '');
+            if (inputValue.length === 16) {
+                event.target.classList.remove("error-border");
+            }
+        });
+
+        document.getElementById("dataValidade").addEventListener("input", function (event) {
+            var inputValue = event.target.value;
+            if (inputValue.length === 2 && inputValue.indexOf('/') === -1) {
+                event.target.value = inputValue + '/';
+            }
+        });
     </script>
 
 </body>

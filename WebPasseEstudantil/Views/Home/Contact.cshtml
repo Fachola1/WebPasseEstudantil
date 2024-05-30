@@ -4,22 +4,208 @@
 <div class="landing-page">
     <header>
         <div class="container">
-            <a href="" class="logo">Contate-<b style="color: #6c63ff;">nos</b></a>
+            <a href="" class="logo">Meu <b style="color: #6c63ff;">perfil</b></a>
         </div>
     </header>
     <div class="content">
         <div class="container">
             <div class="info">
-                <h1><b style="color: #6c63ff;">Contato</b></h1>
-                <p> <b style="color: #6c63ff;">Telefone:</b> (17) 3219-1433 </p>
+                <div class="form-group">
+                    <label for="nome"><b style="color: #6c63ff;">Nome:</b></label>
+                    <input type="text" class="form-control" id="nome" value="Gabriel" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="sobrenome"><b style="color: #6c63ff;">Sobrenome:</b></label>
+                    <input type="text" class="form-control" id="sobrenome" value="Oliveira Vasques" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="email"><b style="color: #6c63ff;">Email:</b></label>
+                    <input type="email" class="form-control" id="email" value="usuario_teste@easypass.com" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="telefone"><b style="color: #6c63ff;">Telefone:</b></label>
+                    <input type="text" class="form-control" id="telefone" value="(17) 3219-1433" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="ra"><b style="color: #6c63ff;">RA:</b></label>
+                    <input type="text" class="form-control" id="ra" value="1234566789" disabled>
+                </div>
+                <button class="edit-btn" onclick="enableEdit()" style="background-color: #0f00ff; margin-top: 15px;">Editar <i class="fas fa-pencil-alt"></i></button>
+                &nbsp; &nbsp;
+                <button class="delete-btn" onclick="confirmDelete()" style="background-color: #ff4d4d; margin-top: 15px;">Excluir Conta <i class="fas fa-trash-alt"></i></button>
                 <br />
-                <p> <b style="color: #6c63ff;">WhatsApp:</b> (17) 98807-9246 </p>
                 <br />
-                <p> <b style="color: #6c63ff;">Email:</b> comercial@easypass.com.br</p>
-            </div>
-            <div class="imagemContato">
-                <img src="https://i.postimg.cc/YSmRjm8h/Voice-chat-rafiki.png">
+                <div class="confirm-delete" id="confirmDelete" style="display: none;">
+                    Deseja realmente excluir a conta?
+                    <br />
+                    <button onclick="deleteAccount(true)">Sim</button>
+                    <button onclick="deleteAccount(false)">Não</button>
+                </div>
+                <div class="success-message" id="successMessage" style="display: none;">
+                    Conta excluída com sucesso!
+                    <br>
+                    <button onclick="closeSuccessMessage()" style="background-color: #6c63ff; color: white;">Fechar</button>
+                </div>
+
+                <button id="saveBtn" onclick="saveChanges()" class="btn-primary" style="margin-left: 20%; justify-content: center; align-items: center; display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SALVAR</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+
+                <div class="success-message" id="successMessageSave" style="display: none;">
+                    Alterações realizadas com sucesso!
+                    <br>
+                    <button onclick="closeSuccessMessageSave()" style="background-color: #6c63ff; color: white;">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+        <style>
+            .success-message {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                text-align: center;
+            }
+
+                /* Estilos para os botões */
+                .confirm-delete button, .success-message button {
+                    margin: 10px;
+                    padding: 5px 10px;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+
+            .confirm-delete {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000; /* Certifique-se de que esta div esteja acima de outros elementos */
+                text-align: center;
+            }
+
+                .confirm-delete button {
+                    margin: 10px;
+                    padding: 5px 10px;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+
+            .edit-btn {
+                background-color: #6c63ff;
+                margin-right: 10px;
+            }
+
+            .delete-btn {
+                background-color: #ff4d4d;
+            }
+        </style>
+
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script>
+            let changesMade = false;
+
+            function enableEdit() {
+                // Habilitar a edição dos campos
+                document.getElementById('nome').disabled = false;
+                document.getElementById('sobrenome').disabled = false;
+                document.getElementById('email').disabled = false;
+                document.getElementById('telefone').disabled = false;
+                document.getElementById('ra').disabled = false;
+
+                if (changesMade) {
+                    document.getElementById('saveBtn').style.display = 'inline-block';
+                }
+            }
+
+            function checkChanges() {
+                // Verificar se houve alterações nos campos
+                changesMade = true;
+                // Mostrar o botão "Salvar"
+                document.getElementById('saveBtn').style.display = 'inline-block';
+            }
+
+            function saveChanges() {
+                // Ocultar o botão "Salvar"
+                document.getElementById('saveBtn').style.display = 'none';
+                // Exibir a mensagem de sucesso
+                document.getElementById('successMessageSave').style.display = 'block';
+            }
+
+            function closeSuccessMessage() {
+                // Ocultar a div de sucesso
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            function closeSuccessMessageSave() {
+                // Ocultar a div de sucesso
+                document.getElementById('successMessageSave').style.display = 'none';
+            }
+
+            function confirmDelete() {
+                // Mostrar ou ocultar a mensagem de confirmação para excluir a conta
+                var confirmDeleteDiv = document.getElementById('confirmDelete');
+                if (confirmDeleteDiv.style.display === 'none' || confirmDeleteDiv.style.display === '') {
+                    confirmDeleteDiv.style.display = 'block';
+                } else {
+                    confirmDeleteDiv.style.display = 'none';
+                }
+            }
+
+            function deleteAccount(confirm) {
+                if (confirm) {
+                    // Ocultar a div de confirmação
+                    document.getElementById('confirmDelete').style.display = 'none';
+                    // Exibir a div de sucesso
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    // Ocultar a div de confirmação
+                    document.getElementById('confirmDelete').style.display = 'none';
+                }
+            }
+
+            function closeSuccessMessage() {
+                // Ocultar a div de sucesso
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            function enableEdit() {
+                // Habilitar a edição dos campos
+                document.getElementById('nome').disabled = false;
+                document.getElementById('sobrenome').disabled = false;
+                document.getElementById('email').disabled = false;
+                document.getElementById('telefone').disabled = false;
+                document.getElementById('ra').disabled = false;
+
+                // Mostrar o botão "Salvar"
+                document.getElementById('saveBtn').style.display = 'inline-block';
+            }
+
+            function saveChanges() {
+                // Ocultar o botão "Salvar"
+                document.getElementById('saveBtn').style.display = 'none';
+                // Exibir a mensagem de sucesso
+                document.getElementById('successMessageSave').style.display = 'block';
+            }
+
+            function closeSuccessMessage() {
+                // Ocultar a div de sucesso
+                document.getElementById('successMessage').style.display = 'none';
+            }
+        </script>
